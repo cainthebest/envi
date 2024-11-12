@@ -1,8 +1,13 @@
 [package]
 name = "envin"
-description = "WIP"
+description = "Displays information about your Rust environment"
 license = "MIT"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 
 [dependencies]
+clap = { version = "4.1.8", features = ["derive"] }
+sysinfo = "0.28.1"
+rustc_version = "0.4.0"
+which = "4.4.0"
+toml = "0.5.9"
