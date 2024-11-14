@@ -2,7 +2,7 @@ use {
     clap::Parser,
     rustc_version::{version, version_meta, Channel},
     std::{collections::HashMap, process::Command},
-    sysinfo::{CpuExt, System, SystemExt},
+    sysinfo::System,
     toml::Value,
     which::which,
 };
@@ -68,10 +68,10 @@ impl SystemInfo {
         let mut sys = System::new_all();
         sys.refresh_all();
 
-        let os_name = sys.name().unwrap_or_else(|| "Unknown".into());
-        let os_version = sys.os_version().unwrap_or_else(|| "".into());
+        let os_name = System::name().unwrap_or_else(|| "Unknown".into());
+        let os_version = System::os_version().unwrap_or_else(|| "".into());
         let os = format!("{} {}", os_name, os_version);
-        let cpu = sys.global_cpu_info().brand().to_string();
+        let cpu = sys.cpus()[0].brand();
         let cpu_cores = sys.physical_core_count().unwrap_or(0);
         let memory = format!(
             "{:.2} GB / {:.2} GB",
@@ -82,7 +82,7 @@ impl SystemInfo {
 
         Self {
             os,
-            cpu,
+            cpu: cpu.to_string(),
             cpu_cores,
             memory,
             shell,
@@ -214,6 +214,12 @@ fn extract_version_number(info: &str) -> String {
         .to_string()
 }
 
+struct DependencyInfo {
+    name: String,
+    specified_version: String,
+    resolved_version: String,
+}
+
 struct ProjectInfo {
     name: String,
     version: String,
@@ -328,10 +334,4 @@ impl ProjectInfo {
             }
         }
     }
-}
-
-struct DependencyInfo {
-    name: String,
-    specified_version: String,
-    resolved_version: String,
 }
