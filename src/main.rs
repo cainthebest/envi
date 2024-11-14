@@ -1,5 +1,5 @@
 use {
-    clap::Parser,
+    clap::{crate_version, Parser},
     rustc_version::{version, version_meta, Channel},
     std::{collections::HashMap, process::Command},
     sysinfo::System,
@@ -10,7 +10,7 @@ use {
 #[derive(Parser)]
 #[command(
     name = "envin",
-    version = "0.0.2",
+    version = crate_version!(),
     about = "Displays information about your Rust environment."
 )]
 struct Args {

@@ -1,13 +1,19 @@
 [package]
 name = "envin"
-description = "Displays information about your Rust environment"
 license = "MIT"
-version = "0.0.3"
 edition = "2021"
+version = "0.0.3"
+repository = "https://github.com/cainthebest/envin"
+description = "Displays information about your Rust environment"
+
+[profile.release]
+lto = "fat"
+opt-level = 3
+codegen-units = 1
 
 [dependencies]
-clap = { version = "4.1.8", features = ["derive"] }
-sysinfo = "0.32.0"
-rustc_version = "0.4.0"
-which = "7.0.0"
 toml = "0.8.19"
+which = "7.0.0"
+sysinfo = "0.32.0"
+rustc_version = "0.4.1"
+clap = { version = "4.5.20", features = ["derive", "cargo"] }
