@@ -12,7 +12,7 @@ opt-level = 3
 codegen-units = 1
 
 [dependencies]
-toml = "0.8.19"
+toml = "0.8.20"
 which = "7.0.0"
 sysinfo = "0.32.0"
 rustc_version = "0.4.1"
